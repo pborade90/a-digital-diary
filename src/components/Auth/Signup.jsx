@@ -12,11 +12,12 @@ const Signup = () => {
     e.preventDefault();
     const success = signup(form);
     if (success) {
-      navigate("/dashboard"); // Redirect to dashboard after successful signup
+      navigate("/dashboard"); // Redirect to dashboard after successful signup and login
     } else {
       setMessage("Email already exists.");
     }
   };
+
 
   return (
     <form className="p-4 space-y-4 bg-gray-100 rounded" onSubmit={handleSubmit}>
@@ -57,6 +58,16 @@ const Signup = () => {
       </select>
       <button className="w-full py-2 text-white bg-blue-500 rounded">Signup</button>
       <p>{message}</p>
+
+      {/* "Already have an account?" Section */}
+      <div className="mt-4 text-center">
+        <p className="text-sm text-gray-600">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-500 hover:text-blue-700">
+            login here
+          </a>
+        </p>
+      </div>
     </form>
   );
 };

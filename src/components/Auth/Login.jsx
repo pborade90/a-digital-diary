@@ -38,7 +38,18 @@ const Login = () => {
         required
       />
       <button className="w-full py-2 text-white bg-blue-500 rounded">Login</button>
+
       {message && <p className="text-red-500">{message}</p>}
+
+      {/* "Don't have an account?" Section */}
+      <div className="mt-4 text-center">
+        <p className="text-sm text-gray-600">
+          Don't have an account?{" "}
+          <a href="/signup" className="text-blue-500 hover:text-blue-700">
+            Sign up here
+          </a>
+        </p>
+      </div>
     </form>
   );
 };

@@ -12,7 +12,8 @@ export const AuthProvider = ({ children }) => {
 
   // Login logic
   const login = (email, password) => {
-    const user = users.find(
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const user = storedUsers.find(
       (u) => u.email === email && u.password === password
     );
     if (user) {
@@ -31,23 +32,29 @@ export const AuthProvider = ({ children }) => {
 
   // Signup logic
   const signup = (user) => {
-    // Check if a user with the same email already exists
-    const exists = users.some((u) => u.email === user.email);
+    // Check if a user with the same email already exists in localStorage
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const exists = storedUsers.some((u) => u.email === user.email);
     if (exists) {
       return false; // Email already exists
     }
 
-    // Ensure role is always defined
+    // Ensure role is always defined (default to 'reader' if not provided)
     const newUser = {
       ...user,
-      role: user.role || "reader", // Default to 'reader' role if not provided
+      role: user.role || "reader",
     };
 
-    // Add the new user and save to local storage
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-    return true;
+    // Add the new user to the local storage users array
+    storedUsers.push(newUser);
+    localStorage.setItem("users", JSON.stringify(storedUsers));
+
+    // Set the users state in React (this ensures we keep the state in sync)
+    setUsers(storedUsers);
+
+    // Attempt to log in the new user after signup
+    const loginSuccess = login(newUser.email, newUser.password);
+    return loginSuccess; // Return true if login is successful, false otherwise
   };
 
   return (
