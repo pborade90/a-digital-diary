@@ -7,12 +7,12 @@ import BlogPage from "./pages/BlogPage";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./components/Admin/ProtectedRoutes";
 import LandingPage from "./pages/LandingPage";
+import CreateBlogPage from "./pages/CreateBlogPage";
+import MyBlogsPage from "./pages/MyBlogsPage";
 
 // Placeholder pages for new functionality
 const ManageUsersPage = () => <div>Manage Users Page</div>;
 const ManageBlogsPage = () => <div>Manage Blogs Page</div>;
-const CreateBlogPage = () => <div>Create Blog Page</div>;
-const MyBlogsPage = () => <div>My Blogs Page</div>;
 
 const App = () => {
   return (
