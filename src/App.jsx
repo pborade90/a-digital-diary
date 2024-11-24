@@ -1,11 +1,12 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignupPage from "./pages/SignupPage"
 import LoginPage from "./pages/LoginPage"
 import Dashboard from "./pages/Dashboard";
 import BlogPage from "./pages/BlogPage";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./components/Admin/ProtectedRoutes";
+import LandingPage from "./pages/LandingPage";
 
 // Placeholder pages for new functionality
 const ManageUsersPage = () => <div>Manage Users Page</div>;
@@ -18,7 +19,7 @@ const App = () => {
     <div className="App">
       <Routes>
         {/* Default redirection */}
-        <Route path="/" element={<Navigate to="/signup" />} />
+        <Route path="/" element={<LandingPage />} />
 
         {/* Public Routes */}
         <Route path="/signup" element={<SignupPage />} />
