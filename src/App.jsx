@@ -8,7 +8,6 @@ import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./components/Admin/ProtectedRoutes";
 import LandingPage from "./pages/LandingPage";
 import CreateBlogPage from "./pages/CreateBlogPage";
-import MyBlogsPage from "./pages/MyBlogsPage";
 
 // Placeholder pages for new functionality
 const ManageUsersPage = () => <div>Manage Users Page</div>;
@@ -39,14 +38,6 @@ const App = () => {
           element={
             <ProtectedRoute allowedRoles={["reader", "author", "admin"]}>
               <BlogPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/my-blogs"
-          element={
-            <ProtectedRoute allowedRoles={["author"]}>
-              <MyBlogsPage />
             </ProtectedRoute>
           }
         />

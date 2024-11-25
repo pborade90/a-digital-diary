@@ -5,129 +5,235 @@ import { useAuth } from "../context/AuthContext";
 const Dashboard = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  const [blogs, setBlogs] = useState([]);
   const [userBlogsCount, setUserBlogsCount] = useState(0);
-  const [recentActivities, setRecentActivities] = useState([]);
 
   useEffect(() => {
-    // Fetch all blogs from localStorage
-    const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+    // Fetch blogs from localStorage
+    const storedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+    setBlogs(storedBlogs);
 
-    // Count blogs created by the logged-in user
-    if (currentUser) {
-      const count = blogs.filter((blog) => blog.authorId === currentUser.id).length;
+    if (currentUser?.role === "author") {
+      // Count blogs created by the logged-in author
+      const count = storedBlogs.filter((blog) => blog.authorId === currentUser.id).length;
       setUserBlogsCount(count);
     }
-
-    // Fetch recent activities from localStorage
-    const activities = JSON.parse(localStorage.getItem("activities")) || [];
-    const userActivities = activities.filter((activity) => activity.userId === currentUser?.id);
-    setRecentActivities(userActivities);
   }, [currentUser]);
 
-  const handleNavigation = (path) => {
-    navigate(path);
+  const handleDelete = (id) => {
+    // Filter out the blog to be deleted
+    const updatedBlogs = blogs.filter((blog) => blog.id !== id);
+
+    // Update the state and local storage
+    setBlogs(updatedBlogs);
+    localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
   };
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    navigate("/"); // Redirect to the landing page
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      {/* Welcome Section */}
-      <header className="bg-blue-500 text-white p-6 rounded shadow-md mb-6">
-        <h1 className="text-3xl font-bold">Welcome, {currentUser?.name || "User"}!</h1>
-        <p className="mt-2 text-lg">
-          Role: <span className="font-semibold">{currentUser?.role || "Unknown"}</span>
-        </p>
-      </header>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Role-Based Actions */}
-        {currentUser?.role === "admin" && (
-          <div className="bg-white p-6 rounded shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Admin Panel</h2>
-            <button
-              onClick={() => handleNavigation("/manage-users")}
-              className="block w-full px-4 py-2 mb-2 text-center bg-blue-500 text-white rounded shadow hover:bg-blue-600"
-            >
-              Manage Users
-            </button>
-            <button
-              onClick={() => handleNavigation("/manage-blogs")}
-              className="block w-full px-4 py-2 text-center bg-green-500 text-white rounded shadow hover:bg-green-600"
-            >
-              Manage Blogs
-            </button>
-          </div>
-        )}
-
-        {currentUser?.role === "author" && (
-          <div className="bg-white p-6 rounded shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Your Toolbox</h2>
-            <button
-              onClick={() => handleNavigation("/create-blog")}
-              className="block w-full px-4 py-2 mb-2 text-center bg-blue-500 text-white rounded shadow hover:bg-blue-600"
-            >
-              Create Blog
-            </button>
-            <button
-              onClick={() => handleNavigation("/my-blogs")}
-              className="block w-full px-4 py-2 text-center bg-green-500 text-white rounded shadow hover:bg-green-600"
-            >
-              Manage My Blogs
-            </button>
-          </div>
-        )}
-
-        {currentUser?.role === "reader" && (
-          <div className="bg-white p-6 rounded shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Explore Blogs</h2>
-            <button
-              onClick={() => handleNavigation("/blogs")}
-              className="block w-full px-4 py-2 text-center bg-blue-500 text-white rounded shadow hover:bg-blue-600"
-            >
-              Browse Blogs
-            </button>
-          </div>
-        )}
-
-        {/* Blog Overview */}
-        <div className="bg-white p-6 rounded shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Blog Overview</h2>
-          <p className="text-gray-700">
-            Total Blogs Published by You: <span className="font-bold">{userBlogsCount}</span>
-          </p>
+    <div className="min-h-screen bg-[#e1e5f2]">
+      {/* Navbar */}
+      <nav className="bg-[#022b3a] text-white p-4 flex justify-between items-center">
+        <div className="text-2xl font-bold">
+          Welcome, {currentUser?.name || "User"} ({currentUser?.role || "Unknown"})
         </div>
-
-        {/* Dynamic Recent Activities Section */}
-        <div className="bg-white p-6 rounded shadow-md md:col-span-2">
-          <h2 className="text-xl font-semibold mb-4">Recent Activities</h2>
-          {recentActivities.length > 0 ? (
-            <ul className="space-y-2 text-gray-700">
-              {recentActivities.slice(0, 5).map((activity, index) => (
-                <li key={index}>
-                  • {activity.action} on{" "}
-                  <span className="font-semibold">{activity.target}</span> at{" "}
-                  {new Date(activity.timestamp).toLocaleString()}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-500">No recent activities to show.</p>
-          )}
-        </div>
-      </div>
-
-      {/* Logout Button */}
-      <div className="mt-6 text-center">
         <button
           onClick={handleLogout}
-          className="px-6 py-2 bg-red-500 text-white rounded shadow hover:bg-red-600"
+          className="px-6 py-1 bg-[#bfdbf7] text-[#022b3a] rounded-lg shadow hover:bg-[#1f7a8c]"
         >
           Logout
         </button>
+      </nav>
+
+      {/* Main Content Section */}
+      <div className="flex justify-center p-6">
+        <div className="w-full max-w-screen-xl">
+
+          {/* Header Section */}
+          <header className="bg-[#1f7a8c] text-white p-6 rounded-lg shadow-md mb-6">
+            <h1 className="text-3xl font-bold">Welcome, {currentUser?.name || "User"}!</h1>
+            <p className="mt-2 text-lg">
+              Role: <span className="font-semibold">{currentUser?.role || "Unknown"}</span>
+            </p>
+          </header>
+
+          {/* Main Dashboard Content */}
+          <div className="flex flex-col lg:flex-row justify-between gap-6">
+
+            {/* Admin Panel */}
+            {currentUser?.role === "admin" && (
+              <div className="w-full lg:w-1/4 bg-white rounded-lg shadow-lg p-6">
+                {/* Panel Header */}
+                <h2 className="text-2xl font-bold text-[#022b3a] mb-6 border-b pb-4">
+                  Admin Dashboard
+                </h2>
+
+                {/* Blogs List */}
+                {blogs.length > 0 ? (
+                  <div className="space-y-6">
+                    {blogs.map((blog) => (
+                      <div
+                        key={blog.id}
+                        className="border border-gray-200 p-4 rounded-md hover:shadow-md transition"
+                      >
+                        {/* Blog Title */}
+                        <h3 className="text-lg font-bold text-[#022b3a] truncate">
+                          {blog.title}
+                        </h3>
+
+                        {/* Blog Content Preview */}
+                        <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+                          {blog.content}
+                        </p>
+
+                        {/* Footer with Actions */}
+                        <div className="flex justify-between items-center mt-4">
+                          <span className="text-xs text-gray-400">
+                            Published: {new Date(blog.createdAt).toLocaleDateString()}
+                          </span>
+                          <div className="flex items-center space-x-3">
+                            {/* Delete Button */}
+                            <button
+                              onClick={() => handleDelete(blog.id)}
+                              className="text-red-600 hover:text-red-800 text-sm font-medium"
+                            >
+                              Delete
+                            </button>
+                            {/* Read More Button */}
+                            <button
+                              onClick={() => navigate(`/blogs/${blog.id}`)}
+                              className="text-[#1f7a8c] hover:underline text-sm font-medium"
+                            >
+                              Read More
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-center">No blogs available to display.</p>
+                )}
+
+                {/* Manage Users Button */}
+                <div className="mt-6">
+                  <a
+                    href="/admin"
+                    className="w-full inline-block text-center bg-[#1f7a8c] text-white hover:bg-[#022b3a] font-semibold rounded-lg py-2 px-4 shadow transition"
+                  >
+                    Manage Users
+                  </a>
+                </div>
+              </div>
+            )}
+
+
+            {/* Author Dashboard */}
+            {currentUser?.role === "author" && (
+              <div className="w-full lg:w-2/3">
+                <div className="flex justify-between mb-8">
+                  {/* Blog Overview Section */}
+                  <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-2xl">
+                    <h2 className="text-xl font-semibold mb-4 text-[#022b3a]">Blog Overview</h2>
+                    <div className="text-gray-600">
+                      <p>
+                        Total Blogs Published: <span className="font-bold">{userBlogsCount}</span>
+                      </p>
+                      <p>
+                        Last Updated:{" "}
+                        <span className="font-bold">
+                          {new Date().toLocaleDateString()}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Create Blog Button */}
+                  <button
+                    onClick={() => navigate("/create-blog")}
+                    className="btn bg-[#1f7a8c] text-white hover:bg-[#022b3a] rounded-lg shadow-md py-2 px-4"
+                  >
+                    Create Blog
+                  </button>
+                </div>
+
+                {/* Your Blogs Section */}
+                <div>
+                  <h2 className="text-xl font-semibold mb-6 text-[#022b3a]">Your Blogs</h2>
+                  {blogs.filter((blog) => blog.authorId === currentUser.id).length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {blogs
+                        .filter((blog) => blog.authorId === currentUser.id)
+                        .map((blog) => (
+                          <div
+                            key={blog.id}
+                            className="border border-gray-200 p-6 rounded-lg shadow-md hover:shadow-lg transition"
+                          >
+                            <h3 className="text-lg font-semibold text-[#022b3a]">{blog.title}</h3>
+                            <p className="text-sm text-gray-500 mt-2">
+                              {blog.content.slice(0, 150)}...
+                            </p>
+                            <div className="flex justify-between items-center mt-4">
+                              <span className="text-xs text-gray-400">
+                                Published on {new Date(blog.createdAt).toLocaleDateString()}
+                              </span>
+                              <button
+                                onClick={() => handleDelete(blog.id)}
+                                className="text-red-500 hover:text-red-700 text-sm"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No blogs found. Start by creating a blog!</p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Reader View */}
+            {currentUser?.role === "reader" && (
+              <div className="w-full lg:w-1/2">
+                <h2 className="text-xl font-semibold mb-6 text-[#022b3a]">Latest Blogs</h2>
+                {blogs.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {blogs.map((blog) => (
+                      <div
+                        key={blog.id}
+                        className="border border-gray-200 p-6 rounded-lg shadow-md hover:shadow-lg transition"
+                      >
+                        <h3 className="text-lg font-semibold text-[#022b3a]">{blog.title}</h3>
+                        <p className="text-sm text-gray-500 mt-2">
+                          {blog.content.slice(0, 150)}...
+                        </p>
+                        <div className="flex justify-between items-center mt-4">
+                          <span className="text-xs text-gray-400">
+                            Published on {new Date(blog.createdAt).toLocaleDateString()}
+                          </span>
+                          <button
+                            onClick={() => navigate(`/blogs/${blog.id}`)}
+                            className="text-[#1f7a8c] hover:underline text-sm"
+                          >
+                            Read More
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No blogs available to display.</p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

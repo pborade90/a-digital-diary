@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import { roles, hasPermission } from "../../utils/roles";
+import { useAuth } from "../context/AuthContext";
 
 const BlogList = ({ blogs, setBlogs }) => {
   const { currentUser } = useAuth();

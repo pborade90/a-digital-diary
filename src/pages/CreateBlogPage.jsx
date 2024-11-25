@@ -22,6 +22,7 @@ const CreateBlogPage = () => {
       title: form.title,
       content: form.content,
       createdAt: new Date().toLocaleString(),
+      author: JSON.parse(localStorage.getItem("currentUser"))?.email, // Assuming you store currentUser in localStorage
     };
 
     // Save the blog and redirect
@@ -31,18 +32,18 @@ const CreateBlogPage = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <div className="max-w-3xl mx-auto bg-white p-6 rounded shadow">
-        <h1 className="text-2xl font-bold mb-4">Create a New Blog</h1>
+    <div className="p-6 bg-[#e1e5f2] min-h-screen flex justify-center items-center">
+      <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+        <h1 className="text-7xl font-semibold text-[#022b3a] mb-6 text-center">Create a New Blog</h1>
         {message && <p className="mb-4 text-center text-green-500">{message}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Blog Title */}
           <div>
-            <label className="block text-sm font-semibold text-gray-600">Title</label>
+            <label className="block text-sm font-semibold text-[#1f7a8c]">Title</label>
             <input
               type="text"
               placeholder="Enter blog title"
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              className="w-full p-3 border border-[#e1e5f2] rounded-lg focus:ring-2 focus:ring-[#1f7a8c] transition"
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               required
@@ -51,10 +52,10 @@ const CreateBlogPage = () => {
 
           {/* Blog Content */}
           <div>
-            <label className="block text-sm font-semibold text-gray-600">Content</label>
+            <label className="block text-sm font-semibold text-[#1f7a8c]">Content</label>
             <textarea
               placeholder="Write your blog content here..."
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-300"
+              className="w-full p-3 border border-[#e1e5f2] rounded-lg focus:ring-2 focus:ring-[#1f7a8c] transition"
               rows={8}
               value={form.content}
               onChange={(e) => setForm({ ...form, content: e.target.value })}
@@ -65,7 +66,7 @@ const CreateBlogPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="w-full py-3 bg-[#1f7a8c] text-white rounded-lg hover:bg-[#022b3a] transition duration-300"
           >
             Publish Blog
           </button>
