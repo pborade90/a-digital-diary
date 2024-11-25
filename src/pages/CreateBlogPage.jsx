@@ -28,7 +28,7 @@ const CreateBlogPage = () => {
     // Save the blog and redirect
     localStorage.setItem("blogs", JSON.stringify([...blogs, newBlog]));
     setMessage("Blog created successfully!");
-    setTimeout(() => navigate("/my-blogs"), 1500); // Redirect to "My Blogs" after 1.5s
+    setTimeout(() => navigate("/blogs"), 1500); // Redirect to "My Blogs" after 1.5s
   };
 
   return (
