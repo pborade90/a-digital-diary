@@ -53,14 +53,6 @@ const Dashboard = () => {
       <div className="flex justify-center p-6">
         <div className="w-full max-w-screen-xl">
 
-          {/* Header Section */}
-          <header className="bg-[#1f7a8c] text-white p-6 rounded-lg shadow-md mb-6">
-            <h1 className="text-3xl font-bold">Welcome, {currentUser?.name || "User"}!</h1>
-            <p className="mt-2 text-lg">
-              Role: <span className="font-semibold">{currentUser?.role || "Unknown"}</span>
-            </p>
-          </header>
-
           {/* Main Dashboard Content */}
           <div className="flex flex-col lg:flex-row justify-between gap-6">
 

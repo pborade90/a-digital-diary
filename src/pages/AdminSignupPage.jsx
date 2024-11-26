@@ -2,17 +2,26 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const SignupPage = () => {
+const AdminSignupPage = () => {
   const { signup } = useAuth();
-  const [form, setForm] = useState({ name: "", email: "", password: "", role: "reader" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "admin", accessKey: "" });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const success = signup(form);
+
+    // Hardcoded access key for example purposes
+    const validAccessKey = "pibee"; // Replace with a secure process
+    if (form.accessKey !== validAccessKey) {
+      setMessage("Invalid access key.");
+      return;
+    }
+
+    const { accessKey, ...userData } = form; // Remove accessKey from the final data
+    const success = signup(userData);
     if (success) {
-      navigate("/dashboard"); // Redirect to dashboard after successful signup
+      navigate("/dashboard"); // Redirect to admin dashboard after successful signup
     } else {
       setMessage("Email already exists.");
     }
@@ -25,10 +34,10 @@ const SignupPage = () => {
         onSubmit={handleSubmit}
       >
         <h1 className="text-2xl font-bold text-center text-gray-800">
-          Create Your Account
+          Admin Signup
         </h1>
         <p className="text-center text-gray-600">
-          Signup to join our community
+          Signup with an authorized access key
         </p>
 
         <input
@@ -55,18 +64,17 @@ const SignupPage = () => {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
         />
-        <select
-          className="p-3 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300"
-          value={form.role}
-          onChange={(e) => setForm({ ...form, role: e.target.value })}
+        <input
+          type="text"
+          placeholder="Admin Access Key"
+          className="p-3 border rounded-lg w-full focus:outline-none focus:ring focus:ring-red-300"
+          value={form.accessKey}
+          onChange={(e) => setForm({ ...form, accessKey: e.target.value })}
           required
-        >
-          <option value="reader">Reader</option>
-          <option value="author">Author</option>
-        </select>
+        />
 
         <button className="w-full py-3 text-white bg-[#1f7a8c] rounded-lg hover:bg-[#022b3a]">
-          Signup
+          Signup as Admin
         </button>
 
         {message && (
@@ -75,24 +83,18 @@ const SignupPage = () => {
 
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
-            Already have an account?{" "}
+            Go back to{" "}
             <a
-              href="/login"
+              href="/signup"
               className="text-blue-500 hover:text-blue-700 underline"
             >
-              Login here
+              User Signup
             </a>
           </p>
         </div>
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
-            For Admin Signup{" "}
-            <a
-              href="/admin-signup"
-              className="text-blue-500 hover:text-blue-700 underline"
-            >
-              Click here
-            </a>
+            Use "pibee" as Admin Access Key
           </p>
         </div>
       </form>
@@ -100,4 +102,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default AdminSignupPage;

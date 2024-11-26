@@ -8,6 +8,7 @@ import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./components/Admin/ProtectedRoutes";
 import LandingPage from "./pages/LandingPage";
 import CreateBlogPage from "./pages/CreateBlogPage";
+import AdminSignupPage from "./pages/AdminSignupPage";
 
 // Placeholder pages for new functionality
 const ManageUsersPage = () => <div>Manage Users Page</div>;
@@ -22,6 +23,7 @@ const App = () => {
 
         {/* Public Routes */}
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/admin-signup" element={<AdminSignupPage />} />
         <Route path="/login" element={<LoginPage />} />
 
         {/* Protected Routes */}
