@@ -43,22 +43,25 @@ src/
 ├── components/             # Reusable components
 │   ├── Admin/
 │   │   ├── ProtectedRoutes.jsx   # Protect routes based on user roles
-│   │   └── UserManagement.jsx    # Admin dashboard for managing users
-├── context/                # Context API for managing auth state
-│   ├── AuthContext.jsx
+├── context/                # Context API for managing app-wide state
+│   ├── AuthContext.jsx        # Manages authentication state and logic
 ├── pages/                  # All application pages
-│   ├── AdminPage.jsx         # Admin dashboard
-│   ├── AdminSignupPage.jsx   # Dedicated signup for admins
-│   ├── BlogList.jsx          # List of blogs
-│   ├── BlogPage.jsx          # Blog overview page
-│   ├── CreateBlogPage.jsx    # Page to create new blogs
-│   ├── Dashboard.jsx         # User dashboard
-│   ├── LandingPage.jsx       # Home/landing page
-│   ├── LoginPage.jsx         # Login page
-│   ├── SignupPage.jsx        # Signup page
-├── utils/                  # Helper utilities
-│   ├── roles.js              # Role definitions for the application
-├── App.jsx                 # Application entry point
+│   ├── About.jsx              # About the application
+│   ├── AdminPage.jsx          # Admin dashboard
+│   ├── AdminSignupPage.jsx    # Dedicated signup for admins
+│   ├── BlogList.jsx           # List of blogs
+│   ├── BlogPage.jsx           # Blog details and overview
+│   ├── ContactUs.jsx          # Contact information
+│   ├── CreateBlogPage.jsx     # Page to create new blogs
+│   ├── Dashboard.jsx          # User dashboard
+│   ├── LandingPage.jsx        # Home/landing page
+│   ├── LoginPage.jsx          # Login page
+│   ├── NotFound.jsx           # 404 error page
+│   ├── SignupPage.jsx         # General signup page
+│   ├── TermsPage.jsx          # Terms and conditions page
+├── App.jsx                 # Main application entry point
+├── index.css               # Global styles
+├── main.jsx                # Application bootstrap file
 ```
 
 ---
@@ -121,7 +124,7 @@ Contributions are welcome! Please follow these steps:
 
 ## Acknowledgements
 
-- Icons from [Heroicons](https://heroicons.com/) (under development)
+- Icons from [Heroicons](https://heroicons.com/)
 - Design inspired by modern blogging platforms.
 
 ---
