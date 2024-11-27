@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+// React Import
+import { useState } from "react";
+
+// RRD Import
 import { useNavigate } from "react-router-dom";
 
 const CreateBlogPage = () => {
@@ -9,7 +12,6 @@ const CreateBlogPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simple validation
     if (!form.title.trim() || !form.content.trim()) {
       setMessage("Both Title and Content are required.");
       return;
@@ -22,13 +24,12 @@ const CreateBlogPage = () => {
       title: form.title,
       content: form.content,
       createdAt: new Date().toLocaleString(),
-      author: JSON.parse(localStorage.getItem("currentUser"))?.email, // Assuming you store currentUser in localStorage
+      author: JSON.parse(localStorage.getItem("currentUser"))?.email,
     };
 
-    // Save the blog and redirect
     localStorage.setItem("blogs", JSON.stringify([...blogs, newBlog]));
     setMessage("Blog created successfully!");
-    setTimeout(() => navigate("/blogs"), 1500); // Redirect to "My Blogs" after 1.5s
+    setTimeout(() => navigate("/blogs"), 1000);
   };
 
   return (
@@ -63,7 +64,6 @@ const CreateBlogPage = () => {
             ></textarea>
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-3 bg-[#1f7a8c] text-white rounded-lg hover:bg-[#022b3a] transition duration-300"

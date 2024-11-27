@@ -1,30 +1,37 @@
-import React from "react";
+// react router dom imports
 import { Routes, Route } from "react-router-dom";
+
+// Pages 
 import SignupPage from "./pages/SignupPage"
 import LoginPage from "./pages/LoginPage"
 import Dashboard from "./pages/Dashboard";
-import BlogPage from "./pages/BlogPage";
-import AdminPage from "./pages/AdminPage";
-import ProtectedRoute from "./components/Admin/ProtectedRoutes";
-import LandingPage from "./pages/LandingPage";
-import CreateBlogPage from "./pages/CreateBlogPage";
 import AdminSignupPage from "./pages/AdminSignupPage";
+import AdminPage from "./pages/AdminPage";
+import CreateBlogPage from "./pages/CreateBlogPage";
+import BlogPage from "./pages/BlogPage";
+import LandingPage from "./pages/LandingPage";
+import NotFound from "./pages/NotFound";
+import About from "./pages/About";
+import ContactUs from "./pages/ContactUs";
+import TermsPage from "./pages/TermsPage";
 
-// Placeholder pages for new functionality
-const ManageUsersPage = () => <div>Manage Users Page</div>;
-const ManageBlogsPage = () => <div>Manage Blogs Page</div>;
+// Components
+import ProtectedRoute from "./components/Admin/ProtectedRoutes";
 
 const App = () => {
   return (
     <div className="App">
       <Routes>
-        {/* Default redirection */}
+        {/* Root Route */}
         <Route path="/" element={<LandingPage />} />
 
         {/* Public Routes */}
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/admin-signup" element={<AdminSignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/terms" element={<TermsPage />} />
 
         {/* Protected Routes */}
         <Route
@@ -59,22 +66,9 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/manage-users"
-          element={
-            <ProtectedRoute allowedRoles={["admin"]}>
-              <ManageUsersPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/manage-blogs"
-          element={
-            <ProtectedRoute allowedRoles={["admin"]}>
-              <ManageBlogsPage />
-            </ProtectedRoute>
-          }
-        />
+
+        {/* Not Found Page  */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

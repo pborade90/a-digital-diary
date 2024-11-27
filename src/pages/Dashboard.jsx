@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from "react";
+// React Imports
+import { useState, useEffect } from "react";
+
+// RRD Imports
 import { useNavigate } from "react-router-dom";
+
+// Components
 import { useAuth } from "../context/AuthContext";
+
+// Heroicons Imports
+import { ArrowRightStartOnRectangleIcon, PencilSquareIcon, UsersIcon } from "@heroicons/react/20/solid";
 
 const Dashboard = () => {
   const { currentUser, logout } = useAuth();
@@ -23,15 +31,13 @@ const Dashboard = () => {
   const handleDelete = (id) => {
     // Filter out the blog to be deleted
     const updatedBlogs = blogs.filter((blog) => blog.id !== id);
-
-    // Update the state and local storage
     setBlogs(updatedBlogs);
     localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
   };
 
   const handleLogout = () => {
     logout();
-    navigate("/"); // Redirect to the landing page
+    navigate("/");
   };
 
   return (
@@ -43,17 +49,16 @@ const Dashboard = () => {
         </div>
         <button
           onClick={handleLogout}
-          className="px-6 py-1 bg-[#bfdbf7] text-[#022b3a] rounded-lg shadow hover:bg-[#1f7a8c]"
+          className="px-6 py-2 bg-[#bfdbf7] text-[#022b3a] rounded-lg shadow hover:bg-[#1f7a8c] hover:text-white flex items-center justify-center gap-2"
         >
-          Logout
+          <span>Logout</span>
+          <ArrowRightStartOnRectangleIcon width={20} />
         </button>
       </nav>
 
-      {/* Main Content Section */}
       <div className="flex justify-center p-6">
         <div className="w-full max-w-screen-xl">
 
-          {/* Main Dashboard Content */}
           <div className="flex flex-col lg:flex-row justify-between gap-6">
 
             {/* Admin Panel */}
@@ -111,13 +116,13 @@ const Dashboard = () => {
                   <p className="text-gray-500 text-center">No blogs available to display.</p>
                 )}
 
-                {/* Manage Users Button */}
                 <div className="mt-6">
                   <a
                     href="/admin"
-                    className="w-full inline-block text-center bg-[#1f7a8c] text-white hover:bg-[#022b3a] font-semibold rounded-lg py-2 px-4 shadow transition"
+                    className="flex items-center justify-center gap-2 w-full bg-[#1f7a8c] text-white hover:bg-[#022b3a] font-semibold rounded-lg py-2 px-4 shadow transition text-center"
                   >
-                    Manage Users
+                    <span>Manage Users</span>
+                    <UsersIcon width={20} />
                   </a>
                 </div>
               </div>
@@ -147,9 +152,10 @@ const Dashboard = () => {
                   {/* Create Blog Button */}
                   <button
                     onClick={() => navigate("/create-blog")}
-                    className="btn bg-[#1f7a8c] text-white hover:bg-[#022b3a] rounded-lg shadow-md py-2 px-4"
+                    className="flex items-center justify-center gap-2 bg-[#1f7a8c] text-white hover:bg-[#022b3a] rounded-lg shadow-md py-2 px-4 transition"
                   >
-                    Create Blog
+                    <span>Create Blog</span>
+                    <PencilSquareIcon width={20} />
                   </button>
                 </div>
 
@@ -190,7 +196,7 @@ const Dashboard = () => {
               </div>
             )}
 
-            {/* Reader View */}
+            {/* Reader Dashboard */}
             {currentUser?.role === "reader" && (
               <div className="w-full lg:w-1/2">
                 <h2 className="text-xl font-semibold mb-6 text-[#022b3a]">Latest Blogs</h2>

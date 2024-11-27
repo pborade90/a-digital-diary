@@ -1,40 +1,38 @@
-import React from "react";
-
 // importing assets
 import icon from "../assets/icon.svg";
 import createBlog from "../assets/create-blog.svg";
 import manageBlog from "../assets/manage-blog.svg";
 import discoverBlog from "../assets/discover-blog.svg";
 
+// RRD Imports
+import { Link } from "react-router-dom";
+
 const LandingPage = () => {
   return (
     <div>
-      {/* Header */}
+      {/* Navbar */}
       <header className="flex justify-between items-center p-4 bg-[#022b3a] text-white">
-        {/* Left Section */}
         <div className="flex items-center space-x-2">
           <img src={icon} alt="A Digital Diary icon" width={30} />
           <h1 className="text-xl font-bold">A Digital Diary</h1>
         </div>
 
-        {/* Right Section */}
         <div>
-          <a
-            href="/login"
+          <Link
+            to="/login"
             className="px-4 py-2 bg-white text-[#022b3a] rounded mr-2 hover:bg-gray-200 hover:scale-105 transition-transform"
           >
             Login
-          </a>
-          <a
-            href="/signup"
+          </Link>
+          <Link
+            to="/signup"
             className="px-4 py-2 bg-[#1f7a8c] text-white rounded hover:scale-105 transition-transform"
           >
             Sign Up
-          </a>
+          </Link>
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="text-center bg-[#e1e5f2] py-16">
         <h1 className="text-4xl font-bold mb-4 text-[#022b3a]">
           Welcome to A Digital Diary
@@ -49,7 +47,6 @@ const LandingPage = () => {
         </p>
       </section>
 
-      {/* Features Section */}
       <section className="py-12 bg-[#ffffff]">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8 text-[#022b3a]">Features</h2>
@@ -100,7 +97,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Expanded CTA Section */}
       <section className="text-center py-16 bg-[#022b3a] text-white">
         <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
         <p className="text-lg mb-4">
@@ -110,31 +106,27 @@ const LandingPage = () => {
           Unleash your creativity, connect with like-minded individuals, and
           make your voice heard in the blogging community.
         </p>
-        <a
-          href="/signup"
+        <Link
+          to="/signup"
           className="px-6 py-3 bg-white text-[#022b3a] text-lg rounded shadow hover:bg-gray-200 transform hover:scale-105 transition-transform"
         >
           Sign Up Now
-        </a>
+        </Link>
       </section>
 
-      {/* Footer */}
       <footer className="bg-[#022b3a] text-[#e1e5f2] py-8">
         <div className="max-w-6xl mx-auto text-center">
           <p className="mb-4">&copy; 2024 A Digital Diary. All Rights Reserved.</p>
           <div className="flex justify-center space-x-4">
-            <a href="#" className="hover:text-white">
+            <Link to="about" className="hover:text-white">
               About Us
-            </a>
-            <a href="#" className="hover:text-white">
-              Contact
-            </a>
-            <a href="#" className="hover:text-white">
+            </Link>
+            <Link to="contact" className="hover:text-white">
+              Contact Us
+            </Link>
+            <Link to="terms" className="hover:text-white">
               Terms
-            </a>
-            <a href="#" className="hover:text-white">
-              Privacy
-            </a>
+            </Link>
           </div>
         </div>
       </footer>

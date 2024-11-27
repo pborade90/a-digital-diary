@@ -1,6 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// React Import
+import { useState } from "react";
+
+// RRD Imports
+import { Link, useNavigate } from "react-router-dom";
+
+// Component
 import { useAuth } from "../context/AuthContext";
+
+// Heroicons Import
+import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -12,7 +20,7 @@ const LoginPage = () => {
     e.preventDefault();
     const success = login(form.email, form.password);
     if (success) {
-      navigate("/dashboard"); // Redirect to dashboard after successful login
+      navigate("/dashboard");
     } else {
       setMessage("Invalid credentials");
     }
@@ -47,8 +55,9 @@ const LoginPage = () => {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
         />
-        <button className="w-full py-3 text-white bg-[#1f7a8c] rounded-lg hover:bg-[#022b3a]">
-          Login
+        <button className="w-full py-3 text-white bg-[#1f7a8c] rounded-lg hover:bg-[#022b3a] flex items-center justify-center gap-2">
+          <span>Login</span>
+          <PaperAirplaneIcon width={20} />
         </button>
 
         {message && (
@@ -58,12 +67,12 @@ const LoginPage = () => {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Don't have an account?{" "}
-            <a
-              href="/signup"
+            <Link
+              to="/signup"
               className="text-blue-500 hover:text-blue-700 underline"
             >
               Sign up here
-            </a>
+            </Link>
           </p>
         </div>
       </form>

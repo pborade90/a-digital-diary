@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+// React Imports
+import { useEffect, useState } from "react";
+
+// Pages
 import CreateBlogPage from "./CreateBlogPage";
 import BlogList from "./BlogList";
+
+// Components
 import { useAuth } from "../context/AuthContext";
 
 const BlogPage = () => {

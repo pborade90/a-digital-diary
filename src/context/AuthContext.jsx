@@ -1,3 +1,4 @@
+// React Imports
 import { createContext, useState, useContext } from "react";
 
 const AuthContext = createContext();
@@ -10,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("currentUser")) || null
   );
 
-  // Login logic
+  // Login 
   const login = (email, password) => {
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
     const user = storedUsers.find(
@@ -24,13 +25,13 @@ export const AuthProvider = ({ children }) => {
     return false;
   };
 
-  // Logout logic
+  // Logout 
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem("currentUser");
   };
 
-  // Signup logic
+  // Signup 
   const signup = (user) => {
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
     const exists = storedUsers.some((u) => u.email === user.email);
@@ -51,23 +52,23 @@ export const AuthProvider = ({ children }) => {
     return loginSuccess;
   };
 
-  // Delete User logic
+  // Delete User 
   const deleteUser = (email) => {
     const updatedUsers = users.filter((user) => user.email !== email);
-    setUsers(updatedUsers); // Update state
-    localStorage.setItem("users", JSON.stringify(updatedUsers)); // Sync with localStorage
+    setUsers(updatedUsers);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
   return (
     <AuthContext.Provider
       value={{
         users,
-        setUsers, // Exposing setUsers for flexibility
+        setUsers,
         currentUser,
         login,
         logout,
         signup,
-        deleteUser, // Provide deleteUser function for AdminPage
+        deleteUser, // deleteUser function for AdminPage
       }}
     >
       {children}

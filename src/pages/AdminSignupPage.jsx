@@ -1,6 +1,14 @@
-import React, { useState } from "react";
+// React Import
+import { useState } from "react";
+
+// RRD Import
 import { useNavigate } from "react-router-dom";
+
+// Components
 import { useAuth } from "../context/AuthContext";
+
+// Heroicons Import
+import { LockClosedIcon } from "@heroicons/react/20/solid";
 
 const AdminSignupPage = () => {
   const { signup } = useAuth();
@@ -12,16 +20,16 @@ const AdminSignupPage = () => {
     e.preventDefault();
 
     // Hardcoded access key for example purposes
-    const validAccessKey = "pibee"; // Replace with a secure process
+    const validAccessKey = "pibee";
     if (form.accessKey !== validAccessKey) {
       setMessage("Invalid access key.");
       return;
     }
 
-    const { accessKey, ...userData } = form; // Remove accessKey from the final data
+    const { accessKey, ...userData } = form;
     const success = signup(userData);
     if (success) {
-      navigate("/dashboard"); // Redirect to admin dashboard after successful signup
+      navigate("/dashboard");
     } else {
       setMessage("Email already exists.");
     }
@@ -73,8 +81,9 @@ const AdminSignupPage = () => {
           required
         />
 
-        <button className="w-full py-3 text-white bg-[#1f7a8c] rounded-lg hover:bg-[#022b3a]">
-          Signup as Admin
+        <button className="w-full py-3 text-white bg-[#1f7a8c] rounded-lg hover:bg-[#022b3a] flex items-center justify-center gap-2">
+          <span>Signup as Admin</span>
+          <LockClosedIcon width={20} />
         </button>
 
         {message && (

@@ -1,15 +1,20 @@
-import React from "react";
+// Components
 import { useAuth } from "../context/AuthContext";
+
+// RRS Imports
 import { useNavigate } from "react-router-dom";
 
+// Heroicons Imports
+import { TrashIcon } from "@heroicons/react/20/solid";
+
 const AdminPage = () => {
-  const { users, currentUser, deleteUser } = useAuth(); // Access deleteUser from context
+  const { users, currentUser, deleteUser } = useAuth();
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-200 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Header */}
+
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-[#022b3a]">Admin Panel</h1>
           <button
@@ -20,7 +25,6 @@ const AdminPage = () => {
           </button>
         </div>
 
-        {/* User Management Table */}
         <div className="p-6 bg-white rounded shadow">
           <h2 className="text-xl font-bold text-[#022b3a] mb-4">
             User Management
@@ -45,9 +49,10 @@ const AdminPage = () => {
                       {user.email !== currentUser.email && (
                         <button
                           onClick={() => deleteUser(user.email)} // Use deleteUser from context
-                          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 flex items-center justify-center gap-2"
                         >
-                          Delete
+                          <span>Delete</span>
+                          <TrashIcon width={20} />
                         </button>
                       )}
                     </td>

@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+// React Import
+import { useState } from "react";
+
+// Components
 import { useAuth } from "../context/AuthContext";
 
 const BlogList = ({ blogs, setBlogs }) => {

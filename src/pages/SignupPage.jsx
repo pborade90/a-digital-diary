@@ -1,6 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// React Import
+import { useState } from "react";
+
+// RRD Imports
+import { Link, useNavigate } from "react-router-dom";
+
+// Component
 import { useAuth } from "../context/AuthContext";
+
+// Heroicons Import
+import { UserPlusIcon } from "@heroicons/react/20/solid";
 
 const SignupPage = () => {
   const { signup } = useAuth();
@@ -12,7 +20,7 @@ const SignupPage = () => {
     e.preventDefault();
     const success = signup(form);
     if (success) {
-      navigate("/dashboard"); // Redirect to dashboard after successful signup
+      navigate("/dashboard");
     } else {
       setMessage("Email already exists.");
     }
@@ -65,9 +73,11 @@ const SignupPage = () => {
           <option value="author">Author</option>
         </select>
 
-        <button className="w-full py-3 text-white bg-[#1f7a8c] rounded-lg hover:bg-[#022b3a]">
-          Signup
+        <button className="w-full py-3 text-white bg-[#1f7a8c] rounded-lg hover:bg-[#022b3a] flex items-center justify-center gap-2">
+          <span>Signup</span>
+          <UserPlusIcon width={20} />
         </button>
+
 
         {message && (
           <p className="text-center text-red-500 text-sm">{message}</p>
@@ -76,23 +86,23 @@ const SignupPage = () => {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Already have an account?{" "}
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="text-blue-500 hover:text-blue-700 underline"
             >
               Login here
-            </a>
+            </Link>
           </p>
         </div>
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             For Admin Signup{" "}
-            <a
-              href="/admin-signup"
+            <Link
+              to="/admin-signup"
               className="text-blue-500 hover:text-blue-700 underline"
             >
               Click here
-            </a>
+            </Link>
           </p>
         </div>
       </form>
