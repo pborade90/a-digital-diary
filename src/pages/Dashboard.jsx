@@ -2,13 +2,13 @@
 import { useState, useEffect } from "react";
 
 // RRD Imports
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Components
 import { useAuth } from "../context/AuthContext";
 
 // Heroicons Imports
-import { ArrowRightStartOnRectangleIcon, PencilSquareIcon, UsersIcon } from "@heroicons/react/20/solid";
+import { ArrowRightStartOnRectangleIcon, PencilSquareIcon, UsersIcon, WalletIcon } from "@heroicons/react/20/solid";
 
 const Dashboard = () => {
   const { currentUser, logout } = useAuth();
@@ -43,18 +43,31 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-[#e1e5f2]">
       {/* Navbar */}
-      <nav className="bg-[#022b3a] text-white p-4 flex justify-between items-center">
-        <div className="text-2xl font-bold">
-          Welcome, {currentUser?.name || "User"} ({currentUser?.role || "Unknown"})
+      <nav className="bg-[#022b3a] text-white p-4 flex flex-wrap justify-between items-center shadow-md">
+        <div className="text-2xl font-bold mb-2 sm:mb-0 flex items-center">
+          Welcome, {currentUser?.name || "User"}
+          <span className="ml-2 text-sm text-[#bfdbf7] font-medium">
+            ({currentUser?.role || "Unknown"})
+          </span>
         </div>
-        <button
-          onClick={handleLogout}
-          className="px-6 py-2 bg-[#bfdbf7] text-[#022b3a] rounded-lg shadow hover:bg-[#1f7a8c] hover:text-white flex items-center justify-center gap-2"
-        >
-          <span>Logout</span>
-          <ArrowRightStartOnRectangleIcon width={20} />
-        </button>
+        <div className="flex flex-wrap gap-4">
+          <Link
+            to="/blogs"
+            className="px-6 py-2 bg-[#bfdbf7] text-[#022b3a] rounded-lg shadow hover:bg-[#1f7a8c] hover:text-white flex items-center justify-center gap-2 transition"
+          >
+            <span>All Blogs</span>
+            <WalletIcon width={20} />
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="px-6 py-2 bg-[#bfdbf7] text-[#022b3a] rounded-lg shadow hover:bg-[#1f7a8c] hover:text-white flex items-center justify-center gap-2 transition"
+          >
+            <span>Logout</span>
+            <ArrowRightStartOnRectangleIcon width={20} />
+          </button>
+        </div>
       </nav>
+
 
       <div className="flex justify-center p-6">
         <div className="w-full max-w-screen-xl">
@@ -70,51 +83,45 @@ const Dashboard = () => {
                 </h2>
 
                 {/* Blogs List */}
-                {blogs.length > 0 ? (
-                  <div className="space-y-6">
-                    {blogs.map((blog) => (
-                      <div
-                        key={blog.id}
-                        className="border border-gray-200 p-4 rounded-md hover:shadow-md transition"
-                      >
-                        {/* Blog Title */}
-                        <h3 className="text-lg font-bold text-[#022b3a] truncate">
-                          {blog.title}
-                        </h3>
+                <div className="flex justify-between mb-8">
+                  {blogs.length > 0 ? (
+                    <div className="space-y-6">
+                      {blogs.map((blog) => (
+                        <div
+                          key={blog.id}
+                          className="border border-gray-200 p-4 rounded-md hover:shadow-md transition"
+                        >
+                          {/* Blog Title */}
+                          <h3 className="text-lg font-bold text-[#022b3a] truncate">
+                            {blog.title}
+                          </h3>
 
-                        {/* Blog Content Preview */}
-                        <p className="text-sm text-gray-600 mt-2 line-clamp-3">
-                          {blog.content}
-                        </p>
+                          {/* Blog Content Preview */}
+                          <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+                            {blog.content.slice(0, 100)}
+                          </p>
 
-                        {/* Footer with Actions */}
-                        <div className="flex justify-between items-center mt-4">
-                          <span className="text-xs text-gray-400">
-                            Published: {new Date(blog.createdAt).toLocaleDateString()}
-                          </span>
-                          <div className="flex items-center space-x-3">
-                            {/* Delete Button */}
-                            <button
-                              onClick={() => handleDelete(blog.id)}
-                              className="text-red-600 hover:text-red-800 text-sm font-medium"
-                            >
-                              Delete
-                            </button>
-                            {/* Read More Button */}
-                            <button
-                              onClick={() => navigate(`/blogs/${blog.id}`)}
-                              className="text-[#1f7a8c] hover:underline text-sm font-medium"
-                            >
-                              Read More
-                            </button>
+                          <div className="flex justify-between items-center mt-4">
+                            <span className="text-xs text-gray-400">
+                              Published: {new Date(blog.createdAt).toLocaleDateString()}
+                            </span>
+                            <div className="flex items-center space-x-3">
+                              {/* Delete Button */}
+                              <button
+                                onClick={() => handleDelete(blog.id)}
+                                className="text-red-600 hover:text-red-800 text-sm font-medium"
+                              >
+                                Delete
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-500 text-center">No blogs available to display.</p>
-                )}
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 text-center">No blogs available to display.</p>
+                  )}
+                </div>
 
                 <div className="mt-6">
                   <a
@@ -163,7 +170,7 @@ const Dashboard = () => {
                 <div>
                   <h2 className="text-xl font-semibold mb-6 text-[#022b3a]">Your Blogs</h2>
                   {blogs.filter((blog) => blog.authorId === currentUser.id).length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="flex flex-col space-y-6">
                       {blogs
                         .filter((blog) => blog.authorId === currentUser.id)
                         .map((blog) => (
@@ -171,17 +178,17 @@ const Dashboard = () => {
                             key={blog.id}
                             className="border border-gray-200 p-6 rounded-lg shadow-md hover:shadow-lg transition"
                           >
-                            <h3 className="text-lg font-semibold text-[#022b3a]">{blog.title}</h3>
-                            <p className="text-sm text-gray-500 mt-2">
-                              {blog.content.slice(0, 150)}...
+                            <h3 className="text-2xl font-semibold text-[#022b3a] mb-4">{blog.title}</h3>
+                            <p className="text-base text-gray-600 mb-6">
+                              {blog.content.slice(0, 350)}...
                             </p>
-                            <div className="flex justify-between items-center mt-4">
-                              <span className="text-xs text-gray-400">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm text-gray-500">
                                 Published on {new Date(blog.createdAt).toLocaleDateString()}
                               </span>
                               <button
                                 onClick={() => handleDelete(blog.id)}
-                                className="text-red-500 hover:text-red-700 text-sm"
+                                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
                               >
                                 Delete
                               </button>
@@ -198,32 +205,34 @@ const Dashboard = () => {
 
             {/* Reader Dashboard */}
             {currentUser?.role === "reader" && (
-              <div className="w-full lg:w-1/2">
-                <h2 className="text-xl font-semibold mb-6 text-[#022b3a]">Latest Blogs</h2>
+              <div className="flex flex-col space-y-6">
+                <h1 className="text-xl font-semibold mb-6 text-[#022b3a]">Latest Blogs</h1>
                 {blogs.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {blogs.map((blog) => (
-                      <div
-                        key={blog.id}
-                        className="border border-gray-200 p-6 rounded-lg shadow-md hover:shadow-lg transition"
-                      >
-                        <h3 className="text-lg font-semibold text-[#022b3a]">{blog.title}</h3>
-                        <p className="text-sm text-gray-500 mt-2">
-                          {blog.content.slice(0, 150)}...
-                        </p>
-                        <div className="flex justify-between items-center mt-4">
-                          <span className="text-xs text-gray-400">
-                            Published on {new Date(blog.createdAt).toLocaleDateString()}
-                          </span>
-                          <button
-                            onClick={() => navigate(`/blogs/${blog.id}`)}
-                            className="text-[#1f7a8c] hover:underline text-sm"
-                          >
-                            Read More
-                          </button>
+                    {blogs
+                      .filter((blog) => blog.authorId === currentUser.id)
+                      .map((blog) => (
+                        <div
+                          key={blog.id}
+                          className="border border-gray-200 p-6 rounded-lg shadow-md hover:shadow-lg transition"
+                        >
+                          <h3 className="text-2xl font-semibold text-[#022b3a] mb-4">{blog.title}</h3>
+                          <p className="text-base text-gray-600 mb-6">
+                            {blog.content.slice(0, 350)}...
+                          </p>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-gray-500">
+                              Published on {new Date(blog.createdAt).toLocaleDateString()}
+                            </span>
+                            <button
+                              onClick={() => handleDelete(blog.id)}
+                              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 ) : (
                   <p className="text-gray-500">No blogs available to display.</p>
