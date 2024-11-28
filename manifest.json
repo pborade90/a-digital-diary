@@ -8,32 +8,32 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/src/assets/icons/logo-72x72.png",
+      "src": "/src/assets/icons/logo-72x72.svg",
       "type": "image/svg+xml",
       "sizes": "72x72"
     },
     {
-      "src": "/src/assets/icons/logo-128x128.png",
+      "src": "/src/assets/icons/logo-128x128.svg",
       "type": "image/png",
       "sizes": "128x128"
     },
     {
-      "src": "/src/assets/icons/logo-144x144.png",
+      "src": "/src/assets/icons/logo-144x144.svg",
       "type": "image/svg+xml",
       "sizes": "144x144"
     },
     {
-      "src": "/src/assets/icons/logo-192x192.png",
+      "src": "/src/assets/icons/logo-192x192.svg",
       "type": "image/svg+xml",
       "sizes": "192x192"
     },
     {
-      "src": "/src/assets/icons/logo-384x384.png",
+      "src": "/src/assets/icons/logo-384x384.svg",
       "type": "image/svg+xml",
       "sizes": "384x384"
     },
     {
-      "src": "/src/assets/icons/logo-512x512.png",
+      "src": "/src/assets/icons/logo-512x512.svg",
       "type": "image/png",
       "sizes": "512x512"
     }
