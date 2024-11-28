@@ -224,12 +224,6 @@ const Dashboard = () => {
                             <span className="text-sm text-gray-500">
                               Published on {new Date(blog.createdAt).toLocaleDateString()}
                             </span>
-                            <button
-                              onClick={() => handleDelete(blog.id)}
-                              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                            >
-                              Delete
-                            </button>
                           </div>
                         </div>
                       ))}
