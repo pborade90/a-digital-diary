@@ -11,6 +11,10 @@ A feature-rich blog website built with **React** and **React Router**, allowing 
 
 Check out the live demo of the app [here](https://adigitaldiary.netlify.app/).
 
+## Screenshots
+
+Check out the live demo of the app [here](https://drive.google.com/drive/folders/1OApDyFcJU3kDcPWBjYbuj_Tmmne78bh4?usp=drive_link).
+
 ## Features
 
 - **Readers**: View and explore blogs created by authors.
